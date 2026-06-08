@@ -51,7 +51,7 @@ export default function Subscribe() {
           color: 'var(--color-navy)',
           margin: '16px 0 0',
         }}>
-          Clio connected.
+          Clio connected. Here's what happens next.
         </h2>
 
         <p style={{
@@ -61,7 +61,7 @@ export default function Subscribe() {
           lineHeight: 1.6,
           marginTop: 12,
         }}>
-          Your Clio account is connected. Start your 14-day free trial to activate your weekly unbilled summary.
+          Every Sunday at 6pm, we'll scan your Clio account and send you one email: every time entry you haven't invoiced and the dollar value sitting uncaptured. Start your trial and your first report arrives this Sunday.
         </p>
 
         <div style={{ marginTop: 24, marginBottom: 8 }}>
