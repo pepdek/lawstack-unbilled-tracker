@@ -7,6 +7,14 @@ export async function redirectToCheckout(firmId: string, email: string): Promise
       body: JSON.stringify({ firm_id: firmId, email }),
     }
   );
-  const { url } = await response.json();
-  window.location.href = url;
+
+  const data = await response.json();
+
+  if (!response.ok || !data.url) {
+    console.error('Checkout error:', data);
+    alert('Something went wrong starting your trial. Please try again or email hello@lawstack.co.');
+    return;
+  }
+
+  window.location.href = data.url;
 }
