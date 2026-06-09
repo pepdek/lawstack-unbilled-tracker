@@ -219,7 +219,7 @@ async function sendEmail(to: string, subject: string, text: string, firmId: stri
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from:    "LawStack <reminders@lawstack.co>",
+      from:    "LawStack <hello@lawstack.co>",
       to:      [to],
       subject,
       text,
@@ -282,11 +282,10 @@ serve(async (req) => {
       // 3. Get unbilled entries from last 30 days
       const entries = await getUnbilledEntries(token);
 
-      // 4. Build unsubscribe URL — points to the edge function directly
+      // 4. Build unsubscribe URL — token only, no firm_id in URL
       const unsubscribeUrl =
         `${SUPABASE_URL}/functions/v1/unsubscribe-unbilled` +
-        `?firm_id=${integration.firm_id}` +
-        `&token=${btoa(integration.firm_id + integration.id)}`;
+        `?token=${btoa(integration.firm_id + integration.id)}`;
 
       // 5. Compose email
       const { subject, text } = composeEmail(entries, attorney, unsubscribeUrl);
