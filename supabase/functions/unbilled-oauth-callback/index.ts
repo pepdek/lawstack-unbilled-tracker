@@ -11,12 +11,69 @@
 // 5. Exchange code for tokens, get firm info
 // 6. Upsert firms + integrations (with stripe_session_id + pending_id)
 // 7. Upsert unbilled_tracker_config
-// 8. Redirect to /confirmed?firm_id=xxx
+// 8. Send welcome email (best-effort, non-blocking)
+// 9. Redirect to /confirmed?firm_id=xxx
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-const CLIO_TOKEN_URL = 'https://app.clio.com/oauth/token';
-const CLIO_API_BASE  = 'https://app.clio.com/api/v4';
+const CLIO_TOKEN_URL  = 'https://app.clio.com/oauth/token';
+const CLIO_API_BASE   = 'https://app.clio.com/api/v4';
+const RESEND_API_KEY  = Deno.env.get('RESEND_API_KEY')!;
+
+// ── Welcome email ──────────────────────────────────────────────────────────
+
+function buildWelcomeEmail(params: {
+  firstName: string;
+  openMatterCount: number;
+  unbilledEntryCount: number;
+  unbilledValueEstimate: number;
+  firmId: string;
+}): string {
+  const { firstName, openMatterCount, unbilledEntryCount,
+          unbilledValueEstimate, firmId } = params;
+
+  const value = unbilledValueEstimate.toLocaleString('en-US', {
+    style: 'currency', currency: 'USD', maximumFractionDigits: 0,
+  });
+
+  return [
+    `Hey ${firstName},`,
+    ``,
+    `You just connected your Clio account to Unbilled Time Tracker.`,
+    ``,
+    `Here's what we found in the first 30 seconds.`,
+    ``,
+    `${'━'.repeat(40)}`,
+    `YOUR PRACTICE RIGHT NOW`,
+    `${'━'.repeat(40)}`,
+    `Open matters:          ${openMatterCount}`,
+    `Uninvoiced entries:    ${unbilledEntryCount}`,
+    `Est. uncaptured value: ${value}`,
+    `${'━'.repeat(40)}`,
+    ``,
+    `Every Sunday at 6pm, you'll get one email with this`,
+    `list updated. That's it. You don't log in. You don't`,
+    `check anything. It just arrives.`,
+    ``,
+    `I built this because I watched attorneys leave thousands`,
+    `of dollars on the table every month not because they`,
+    `were bad at their jobs — because nobody told them the`,
+    `number. Now you know yours.`,
+    ``,
+    `If your first Sunday email surfaces something useful,`,
+    `reply and tell me. I read every one.`,
+    ``,
+    `— Pep`,
+    `Founder, LawStack`,
+    `pep@lawstack.co`,
+    ``,
+    `${'─'.repeat(40)}`,
+    `LawStack Inc. · Tacoma, WA`,
+    `Unsubscribe: https://unbilled.lawstack.co/unsubscribe?firm_id=${firmId}`,
+  ].join('\n');
+}
+
+// ── Main handler ───────────────────────────────────────────────────────────
 
 Deno.serve(async (req: Request) => {
   const url    = new URL(req.url);
@@ -70,9 +127,9 @@ Deno.serve(async (req: Request) => {
     const { access_token, refresh_token, expires_in } = await tokenRes.json();
     const tokenExpiresAt = new Date(Date.now() + (expires_in ?? 3600) * 1000).toISOString();
 
-    // 2. Get Clio user info
+    // 2. Get Clio user info (rate added for welcome email)
     const whoRes = await fetch(
-      `${CLIO_API_BASE}/users/who_am_i.json?fields=id,email,name`,
+      `${CLIO_API_BASE}/users/who_am_i.json?fields=id,email,name,rate`,
       { headers: { Authorization: `Bearer ${access_token}` } }
     );
 
@@ -173,6 +230,87 @@ Deno.serve(async (req: Request) => {
     if (configErr) {
       console.error('Config upsert failed:', configErr);
       return Response.redirect(`${appUrl}/connect?error=db_failed`, 302);
+    }
+
+    // 7. Send welcome email — best-effort, non-blocking
+    try {
+      const attorneyRate  = clioUser.rate ?? 250;
+      const firstName     = (clioUser.name as string).split(' ')[0];
+
+      // Unbilled time entries (last 30 days)
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      const since = thirtyDaysAgo.toISOString().split('T')[0];
+
+      const entriesQs = new URLSearchParams({
+        type:     'TimeEntry',
+        billed:   'false',
+        date_min: since,
+        fields:   'quantity_in_hours,activity_description{rate}',
+        limit:    '200',
+      });
+      const entriesRes = await fetch(
+        `${CLIO_API_BASE}/activities.json?${entriesQs}`,
+        { headers: { Authorization: `Bearer ${access_token}` } }
+      );
+      const entriesData  = entriesRes.ok ? await entriesRes.json() : { data: [] };
+      const entries      = entriesData.data ?? [];
+      const unbilledCount = entries.length;
+      const unbilledValue = entries.reduce((sum: number, e: any) => {
+        const hours = e.quantity_in_hours ?? 0;
+        const rate  = e.activity_description?.rate ?? attorneyRate;
+        return sum + Math.round(hours * rate);
+      }, 0);
+
+      // Open matters count — request 1 record, read total from meta
+      const mattersRes = await fetch(
+        `${CLIO_API_BASE}/matters.json?status=open&fields=id&limit=1`,
+        { headers: { Authorization: `Bearer ${access_token}` } }
+      );
+      const mattersData   = mattersRes.ok ? await mattersRes.json() : {};
+      const openMatters   = mattersData.meta?.pager?.total_entries ?? 0;
+
+      // Build and send welcome email
+      const emailBody = buildWelcomeEmail({
+        firstName,
+        openMatterCount:       openMatters,
+        unbilledEntryCount:    unbilledCount,
+        unbilledValueEstimate: unbilledValue,
+        firmId,
+      });
+
+      const sendRes = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization:  `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from:    'Pep at LawStack <pep@lawstack.co>',
+          to:      [recipientEmail],
+          subject: `${firstName}, here's what's sitting unbilled in your Clio account`,
+          text:    emailBody,
+        }),
+      });
+
+      if (!sendRes.ok) {
+        console.error('Welcome email send failed:', await sendRes.text());
+      } else {
+        // Log to digest_log
+        await supabase.from('digest_log').insert({
+          firm_id:         firmId,
+          app_id:          'unbilled-welcome',
+          sent_at:         new Date().toISOString(),
+          items_count:     unbilledCount,
+          recipient_email: recipientEmail,
+          status:          'sent',
+        });
+        console.log(`Welcome email sent: firm=${firmId} entries=${unbilledCount} value=${unbilledValue}`);
+      }
+    } catch (welcomeErr: unknown) {
+      // Non-blocking — log and continue to redirect
+      const msg = welcomeErr instanceof Error ? welcomeErr.message : String(welcomeErr);
+      console.error('Welcome email error (non-fatal):', msg);
     }
 
     console.log(`Connected: firm=${firmId} (${clioFirmName}) email=${recipientEmail} pending=${pendingId} stripe=${sessionId}`);
