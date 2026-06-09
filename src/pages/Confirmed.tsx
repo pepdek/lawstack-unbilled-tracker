@@ -36,7 +36,7 @@ export default function Confirmed() {
           color: 'var(--color-navy)',
           margin: '16px 0 0',
         }}>
-          You're all set.
+          You're connected.
         </h2>
 
         <p style={{
@@ -46,7 +46,10 @@ export default function Confirmed() {
           lineHeight: 1.6,
           marginTop: 12,
         }}>
-          Your first unbilled summary will arrive this Sunday at 6pm Pacific. Every week after that, automatically.
+          Unbilled Time Tracker is now watching your Clio account.
+          Every Sunday at 6pm, you'll receive one email listing every
+          uninvoiced time entry from the past 30 days — and the dollar
+          value sitting uncaptured. Your first report arrives this Sunday.
         </p>
 
         <p style={{
@@ -56,47 +59,11 @@ export default function Confirmed() {
           marginTop: 20,
           lineHeight: 1.6,
         }}>
-          A receipt from Stripe is on its way to your email. Your 14-day trial starts today.
-        </p>
-
-        <hr style={{
-          border: 'none',
-          borderTop: '1px solid var(--color-gray-100)',
-          margin: '32px 0',
-        }} />
-
-        <div>
-          <div style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
-            fontSize: 11,
-            fontWeight: 500,
-            color: 'var(--color-gray-500)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
-            marginBottom: 12,
-          }}>
-            ALSO FROM LAWSTACK
-          </div>
-          <p style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
-            fontSize: 14,
-            color: 'var(--color-gray-900)',
-            marginBottom: 8,
-          }}>
-            New Client Checklist — automatic task list every time you open a new matter.
-          </p>
-          <a
-            href="https://lawstack.co/apps/new-client-checklist"
-            style={{
-              fontFamily: "'IBM Plex Sans', sans-serif",
-              fontSize: 14,
-              color: 'var(--color-blue)',
-              textDecoration: 'none',
-            }}
-          >
-            Learn more → lawstack.co/apps/new-client-checklist
+          Questions? Reply to any LawStack email or contact{' '}
+          <a href="mailto:pep@lawstack.co" style={{ color: 'var(--color-gray-500)' }}>
+            pep@lawstack.co
           </a>
-        </div>
+        </p>
       </div>
     </div>
   );

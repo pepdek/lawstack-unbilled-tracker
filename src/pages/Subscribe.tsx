@@ -1,11 +1,36 @@
+import { useState } from 'react';
 import { Check } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
-import { redirectToCheckout } from '../lib/stripe';
 
 export default function Subscribe() {
   const [searchParams] = useSearchParams();
   const firmId = searchParams.get('firm_id') ?? '';
-  const email = searchParams.get('email') ?? '';
+  const email  = searchParams.get('email')   ?? '';
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError]     = useState<string | null>(null);
+
+  const handleStartTrial = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-checkout-session`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ firm_id: firmId, email }),
+        }
+      );
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Failed to create checkout session');
+      window.location.href = data.url;
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+      setError(message);
+      setLoading(false);
+    }
+  };
 
   return (
     <div style={{
@@ -86,10 +111,11 @@ export default function Subscribe() {
         </div>
 
         <button
-          onClick={() => redirectToCheckout(firmId, email)}
+          onClick={handleStartTrial}
+          disabled={loading}
           style={{
             width: '100%',
-            background: 'var(--color-blue)',
+            background: loading ? 'var(--color-gray-300)' : 'var(--color-blue)',
             color: 'var(--color-white)',
             fontFamily: "'IBM Plex Sans', sans-serif",
             fontSize: 14,
@@ -97,15 +123,27 @@ export default function Subscribe() {
             padding: '14px 28px',
             borderRadius: 6,
             border: 'none',
-            cursor: 'pointer',
+            cursor: loading ? 'not-allowed' : 'pointer',
             marginTop: 24,
             transition: 'background 150ms',
           }}
-          onMouseEnter={e => (e.currentTarget.style.background = 'var(--color-blue-hover)')}
-          onMouseLeave={e => (e.currentTarget.style.background = 'var(--color-blue)')}
+          onMouseEnter={e => { if (!loading) e.currentTarget.style.background = 'var(--color-blue-hover)'; }}
+          onMouseLeave={e => { if (!loading) e.currentTarget.style.background = 'var(--color-blue)'; }}
         >
-          Start free trial →
+          {loading ? 'Redirecting to Stripe…' : 'Start free trial →'}
         </button>
+
+        {error && (
+          <p style={{
+            fontFamily: "'IBM Plex Sans', sans-serif",
+            fontSize: 13,
+            color: 'var(--color-red)',
+            marginTop: 12,
+            lineHeight: 1.5,
+          }}>
+            {error} — or email <a href="mailto:hello@lawstack.co" style={{ color: 'var(--color-red)' }}>hello@lawstack.co</a>
+          </p>
+        )}
 
         <p style={{
           fontFamily: "'IBM Plex Sans', sans-serif",
