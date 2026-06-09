@@ -9,6 +9,13 @@ export default function Connect() {
     const pendingId = searchParams.get('pending_id') ?? '';
     const sessionId = searchParams.get('session_id') ?? '';
 
+    // Guard: both params must come from Stripe's success_url.
+    // Direct navigation or a manually typed URL won't have them.
+    if (!pendingId || !sessionId) {
+      window.location.replace('/subscribe');
+      return;
+    }
+
     if (pendingId) sessionStorage.setItem('ls_pending_id', pendingId);
     if (sessionId) sessionStorage.setItem('ls_stripe_session', sessionId);
 
