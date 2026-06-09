@@ -1,12 +1,6 @@
 import { useState } from 'react';
-import { Check } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom';
 
 export default function Subscribe() {
-  const [searchParams] = useSearchParams();
-  const firmId = searchParams.get('firm_id') ?? '';
-  const email  = searchParams.get('email')   ?? '';
-
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState<string | null>(null);
 
@@ -19,7 +13,7 @@ export default function Subscribe() {
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ firm_id: firmId, email }),
+          body: JSON.stringify({ app_name: 'unbilled-time-tracker' }),
         }
       );
       const data = await res.json();
@@ -58,25 +52,12 @@ export default function Subscribe() {
           LawStack
         </div>
 
-        <div style={{
-          width: 72,
-          height: 72,
-          borderRadius: '50%',
-          background: 'var(--color-green-bg)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          margin: '0 auto',
-        }}>
-          <Check size={48} color="var(--color-green)" strokeWidth={2} />
-        </div>
-
         <h2 style={{
           fontSize: 24,
           color: 'var(--color-navy)',
-          margin: '16px 0 0',
+          margin: '0 0 12px',
         }}>
-          Clio connected. Here's what happens next.
+          Start your free trial.
         </h2>
 
         <p style={{
@@ -84,9 +65,9 @@ export default function Subscribe() {
           fontSize: 15,
           color: 'var(--color-gray-500)',
           lineHeight: 1.6,
-          marginTop: 12,
+          marginTop: 0,
         }}>
-          Every Sunday at 6pm, we'll scan your Clio account and send you one email: every time entry you haven't invoiced and the dollar value sitting uncaptured. Start your trial and your first report arrives this Sunday.
+          Every Sunday at 6pm, we'll scan your Clio account and send you one email: every time entry you haven't invoiced and the dollar value sitting uncaptured.
         </p>
 
         <div style={{ marginTop: 24, marginBottom: 8 }}>

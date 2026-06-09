@@ -96,7 +96,7 @@ export default function Landing() {
 
         <div style={{ marginTop: 32 }}>
           <button
-            onClick={() => navigate('/connect')}
+            onClick={() => navigate('/subscribe')}
             style={ctaStyle}
             onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')}
             onMouseLeave={e => (e.currentTarget.style.opacity = '1')}

@@ -11,18 +11,13 @@ serve(async (req) => {
   }
 
   try {
-    const { firm_id, email } = await req.json();
-
-    if (!firm_id || !email) {
-      return new Response(
-        JSON.stringify({ error: "firm_id and email are required" }),
-        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
+    const body = await req.json();
+    const email    = body.email    ?? null;   // optional — Stripe collects it if absent
+    const app_name = body.app_name ?? "unbilled-time-tracker";
 
     const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY");
-    const priceId = Deno.env.get("STRIPE_PRICE_ID");
-    const appUrl = Deno.env.get("APP_URL") ?? "https://unbilled.lawstack.co";
+    const priceId         = Deno.env.get("STRIPE_PRICE_ID");
+    const appUrl          = Deno.env.get("APP_URL") ?? "https://unbilled.lawstack.co";
 
     if (!stripeSecretKey || !priceId) {
       console.error("Missing Stripe env vars — STRIPE_SECRET_KEY:", !!stripeSecretKey, "STRIPE_PRICE_ID:", !!priceId);
@@ -32,25 +27,33 @@ serve(async (req) => {
       );
     }
 
+    // Generate a pending session ID to thread through the OAuth flow
+    const pendingId = crypto.randomUUID();
+
+    const params: Record<string, string> = {
+      "mode": "subscription",
+      "payment_method_types[0]": "card",
+      "line_items[0][price]": priceId,
+      "line_items[0][quantity]": "1",
+      "subscription_data[trial_period_days]": "14",
+      "client_reference_id": pendingId,
+      "success_url": `${appUrl}/connect?pending_id=${pendingId}&session_id={CHECKOUT_SESSION_ID}`,
+      "cancel_url": `${appUrl}/subscribe`,
+      "metadata[pending_id]": pendingId,
+      "metadata[app_name]": app_name,
+    };
+
+    if (email) {
+      params["customer_email"] = email;
+    }
+
     const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${stripeSecretKey}`,
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: new URLSearchParams({
-        "mode": "subscription",
-        "payment_method_types[0]": "card",
-        "line_items[0][price]": priceId,
-        "line_items[0][quantity]": "1",
-        "subscription_data[trial_period_days]": "14",
-        "customer_email": email,
-        "client_reference_id": firm_id,
-        "success_url": `${appUrl}/confirmed?firm_id=${firm_id}&session_id={CHECKOUT_SESSION_ID}`,
-        "cancel_url": `${appUrl}/subscribe?firm_id=${firm_id}&email=${encodeURIComponent(email)}`,
-        "metadata[firm_id]": firm_id,
-        "metadata[app_name]": "unbilled-time-tracker",
-      }),
+      body: new URLSearchParams(params),
     });
 
     const session = await response.json();
@@ -62,6 +65,8 @@ serve(async (req) => {
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
+
+    console.log(`Checkout session created: ${session.id} pending_id: ${pendingId}`);
 
     return new Response(
       JSON.stringify({ url: session.url }),

@@ -1,7 +1,28 @@
-import { Check } from 'lucide-react';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { getClioAuthUrl } from '../lib/clio';
 
 export default function Connect() {
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const pendingId = searchParams.get('pending_id') ?? '';
+    const sessionId = searchParams.get('session_id') ?? '';
+
+    if (pendingId) sessionStorage.setItem('ls_pending_id', pendingId);
+    if (sessionId) sessionStorage.setItem('ls_stripe_session', sessionId);
+
+    const state = btoa(JSON.stringify({ pending_id: pendingId, session_id: sessionId }));
+    const clioUrl = getClioAuthUrl(state);
+
+    // Small delay so the user sees the message before the redirect
+    const timer = setTimeout(() => {
+      window.location.href = clioUrl;
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -17,9 +38,9 @@ export default function Connect() {
         border: '1px solid var(--color-gray-100)',
         borderRadius: 8,
         padding: 40,
+        textAlign: 'center',
       }}>
         <div style={{
-          textAlign: 'center',
           fontFamily: "'IBM Plex Serif', serif",
           fontSize: 18,
           color: 'var(--color-navy)',
@@ -28,79 +49,38 @@ export default function Connect() {
           LawStack
         </div>
 
+        <div style={{
+          width: 48,
+          height: 48,
+          borderRadius: '50%',
+          border: '3px solid var(--color-blue)',
+          borderTopColor: 'transparent',
+          margin: '0 auto 24px',
+          animation: 'spin 0.8s linear infinite',
+        }} />
+
+        <style>{`
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+        `}</style>
+
         <h2 style={{
-          textAlign: 'center',
-          fontSize: 24,
+          fontSize: 20,
           color: 'var(--color-navy)',
-          margin: 0,
+          margin: '0 0 12px',
         }}>
-          Connect your Clio account
+          Payment confirmed.
         </h2>
 
         <p style={{
-          textAlign: 'center',
           fontFamily: "'IBM Plex Sans', sans-serif",
           fontSize: 15,
           color: 'var(--color-gray-500)',
           lineHeight: 1.6,
-          marginTop: 12,
+          margin: 0,
         }}>
-          Unbilled Time Tracker reads your uninvoiced time entries and matter names. We never modify your data or access client matter content.
-        </p>
-
-        <div style={{ marginTop: 24, marginBottom: 32 }}>
-          {[
-            'Read uninvoiced time entries',
-            'Read open matter names',
-            'Read-only access — we never write to Clio',
-          ].map((item) => (
-            <div key={item} style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-              marginBottom: 12,
-            }}>
-              <Check size={16} color="var(--color-green)" strokeWidth={2.5} />
-              <span style={{
-                fontFamily: "'IBM Plex Sans', sans-serif",
-                fontSize: 14,
-                color: 'var(--color-gray-900)',
-              }}>
-                {item}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <button
-          onClick={() => { window.location.href = getClioAuthUrl(); }}
-          style={{
-            width: '100%',
-            background: 'var(--color-blue)',
-            color: 'var(--color-white)',
-            fontFamily: "'IBM Plex Sans', sans-serif",
-            fontSize: 14,
-            fontWeight: 600,
-            padding: '14px 28px',
-            borderRadius: 6,
-            border: 'none',
-            cursor: 'pointer',
-            transition: 'background 150ms',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.background = 'var(--color-blue-hover)')}
-          onMouseLeave={e => (e.currentTarget.style.background = 'var(--color-blue)')}
-        >
-          Connect Clio →
-        </button>
-
-        <p style={{
-          fontFamily: "'IBM Plex Sans', sans-serif",
-          fontSize: 13,
-          color: 'var(--color-gray-500)',
-          textAlign: 'center',
-          marginTop: 16,
-        }}>
-          You'll be taken to Clio to authorize. Takes about 90 seconds.
+          Connecting your Clio account…
         </p>
       </div>
     </div>
