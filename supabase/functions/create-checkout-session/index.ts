@@ -17,7 +17,7 @@ serve(async (req) => {
 
     const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY");
     const priceId         = Deno.env.get("STRIPE_PRICE_ID");
-    const appUrl          = Deno.env.get("APP_URL") ?? "https://unbilled.lawstack.co";
+    const appUrl          = Deno.env.get("UNBILLED_APP_URL") ?? "https://unbilled.lawstack.co";
 
     if (!stripeSecretKey || !priceId) {
       console.error("Missing Stripe env vars — STRIPE_SECRET_KEY:", !!stripeSecretKey, "STRIPE_PRICE_ID:", !!priceId);
