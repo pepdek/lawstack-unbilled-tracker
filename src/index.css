@@ -1,29 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist+Mono:wght@500;600&display=swap');
+
 :root {
-  --color-navy: #0F1B2D;
-  --color-blue: #2B6CB0;
-  --color-blue-hover: #1E4E8C;
-  --color-white: #FFFFFF;
-  --color-gray-50: #F7F8FA;
-  --color-gray-100: #EEF0F3;
-  --color-gray-300: #CBD0D8;
-  --color-gray-500: #6B7280;
-  --color-gray-900: #111827;
+  --ls-accent: #369EA1;
+  --ls-accent-dark: #2B7E81;
+  --ls-accent-subtle: #E8F6F6;
+  --ls-canvas: #FFFFFF;
+  --ls-surface: #F7F7F6;
+  --ls-border: #E8E8E6;
+  --ls-text-primary: #0A0A09;
+  --ls-text-secondary: #6B6B69;
+  --ls-text-tertiary: #A8A8A5;
+  --ls-font-display: 'Inter', sans-serif;
+  --ls-font-body: 'Inter', sans-serif;
+  --ls-font-mono: 'Geist Mono', monospace;
+  --ls-radius-sm: 4px;
+  --ls-radius-md: 6px;
+  --ls-radius-lg: 10px;
+  --ls-transition-hover: 120ms ease-out;
+  --ls-transition-enter: 200ms ease-out;
+
+  /* semantic aliases kept for status colours (not rebranded) */
   --color-green: #15803D;
   --color-green-bg: #F0FDF4;
   --color-yellow: #B45309;
   --color-yellow-bg: #FFFBEB;
   --color-red: #B91C1C;
-  --color-red-bg: #FEF2F2;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
-  font-family: 'IBM Plex Sans', sans-serif;
-  background: var(--color-gray-50);
-  color: var(--color-gray-900);
+  font-family: var(--ls-font-body);
+  background: var(--ls-surface);
+  color: var(--ls-text-primary);
   margin: 0;
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2 { font-family: 'IBM Plex Serif', serif; }
+h1, h2 { font-family: var(--ls-font-display); }

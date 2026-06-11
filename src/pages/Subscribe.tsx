@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AppIcon } from '@/components/brand';
 
 export default function Subscribe() {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,7 @@ export default function Subscribe() {
   return (
     <div style={{
       minHeight: '100vh',
+      background: '#FFFFFF',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -37,33 +39,26 @@ export default function Subscribe() {
       <div style={{
         maxWidth: 420,
         width: '100%',
-        background: 'var(--color-white)',
-        border: '1px solid var(--color-gray-100)',
-        borderRadius: 8,
-        padding: 40,
         textAlign: 'center',
       }}>
-        <div style={{
-          fontFamily: "'IBM Plex Serif', serif",
-          fontSize: 18,
-          color: 'var(--color-navy)',
-          marginBottom: 32,
-        }}>
-          LawStack
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+          <AppIcon />
         </div>
 
         <h2 style={{
+          fontFamily: "'Inter', sans-serif",
           fontSize: 24,
-          color: 'var(--color-navy)',
+          fontWeight: 700,
+          color: '#0A0A09',
           margin: '0 0 12px',
         }}>
           Start your free trial.
         </h2>
 
         <p style={{
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: 15,
-          color: 'var(--color-gray-500)',
+          color: '#6B6B69',
           lineHeight: 1.6,
           marginTop: 0,
         }}>
@@ -72,19 +67,21 @@ export default function Subscribe() {
 
         <div style={{ marginTop: 24, marginBottom: 8 }}>
           <span style={{
-            fontFamily: "'IBM Plex Serif', serif",
+            fontFamily: "'Geist Mono', monospace",
+            fontWeight: 600,
             fontSize: 36,
-            color: 'var(--color-navy)',
+            color: '#0A0A09',
           }}>$49</span>
           <span style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
+            fontFamily: "'Inter', sans-serif",
+            fontWeight: 400,
             fontSize: 16,
-            color: 'var(--color-gray-500)',
+            color: '#6B6B69',
           }}>/month</span>
           <div style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
+            fontFamily: "'Inter', sans-serif",
             fontSize: 13,
-            color: 'var(--color-gray-500)',
+            color: '#6B6B69',
             marginTop: 4,
           }}>
             14-day free trial — no charge until day 15
@@ -96,27 +93,27 @@ export default function Subscribe() {
           disabled={loading}
           style={{
             width: '100%',
-            background: loading ? 'var(--color-gray-300)' : 'var(--color-blue)',
-            color: 'var(--color-white)',
-            fontFamily: "'IBM Plex Sans', sans-serif",
-            fontSize: 14,
+            background: loading ? '#A8A8A5' : '#369EA1',
+            color: '#0A0A09',
+            fontFamily: "'Inter', sans-serif",
+            fontSize: 15,
             fontWeight: 600,
-            padding: '14px 28px',
+            padding: '13px 28px',
             borderRadius: 6,
             border: 'none',
             cursor: loading ? 'not-allowed' : 'pointer',
             marginTop: 24,
-            transition: 'background 150ms',
+            transition: 'background 120ms ease-out',
           }}
-          onMouseEnter={e => { if (!loading) e.currentTarget.style.background = 'var(--color-blue-hover)'; }}
-          onMouseLeave={e => { if (!loading) e.currentTarget.style.background = 'var(--color-blue)'; }}
+          onMouseEnter={e => { if (!loading) e.currentTarget.style.background = '#2B7E81'; }}
+          onMouseLeave={e => { if (!loading) e.currentTarget.style.background = '#369EA1'; }}
         >
           {loading ? 'Redirecting to Stripe…' : 'Start free trial →'}
         </button>
 
         {error && (
           <p style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
+            fontFamily: "'Inter', sans-serif",
             fontSize: 13,
             color: 'var(--color-red)',
             marginTop: 12,
@@ -127,9 +124,9 @@ export default function Subscribe() {
         )}
 
         <p style={{
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: 13,
-          color: 'var(--color-gray-500)',
+          color: '#6B6B69',
           marginTop: 12,
         }}>
           Secure payment via Stripe. Cancel anytime.

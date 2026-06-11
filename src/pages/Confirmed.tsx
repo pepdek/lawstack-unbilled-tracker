@@ -4,6 +4,7 @@ export default function Confirmed() {
   return (
     <div style={{
       minHeight: '100vh',
+      background: '#FFFFFF',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -12,10 +13,6 @@ export default function Confirmed() {
       <div style={{
         maxWidth: 420,
         width: '100%',
-        background: 'var(--color-white)',
-        border: '1px solid var(--color-gray-100)',
-        borderRadius: 8,
-        padding: 40,
         textAlign: 'center',
       }}>
         <div style={{
@@ -32,17 +29,19 @@ export default function Confirmed() {
         </div>
 
         <h2 style={{
+          fontFamily: "'Inter', sans-serif",
           fontSize: 24,
-          color: 'var(--color-navy)',
+          fontWeight: 700,
+          color: '#0A0A09',
           margin: '16px 0 0',
         }}>
           You're connected.
         </h2>
 
         <p style={{
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: 15,
-          color: 'var(--color-gray-500)',
+          color: '#6B6B69',
           lineHeight: 1.6,
           marginTop: 12,
         }}>
@@ -53,14 +52,14 @@ export default function Confirmed() {
         </p>
 
         <p style={{
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: 13,
-          color: 'var(--color-gray-500)',
+          color: '#6B6B69',
           marginTop: 20,
           lineHeight: 1.6,
         }}>
           Questions? Reply to any LawStack email or contact{' '}
-          <a href="mailto:pep@lawstack.co" style={{ color: 'var(--color-gray-500)' }}>
+          <a href="mailto:pep@lawstack.co" style={{ color: '#6B6B69' }}>
             pep@lawstack.co
           </a>
         </p>

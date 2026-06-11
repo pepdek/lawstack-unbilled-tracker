@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getClioAuthUrl } from '../lib/clio';
+import { AppIcon } from '@/components/brand';
 
 export default function Connect() {
   const [searchParams] = useSearchParams();
@@ -33,6 +34,7 @@ export default function Connect() {
   return (
     <div style={{
       minHeight: '100vh',
+      background: '#FFFFFF',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -41,26 +43,17 @@ export default function Connect() {
       <div style={{
         maxWidth: 420,
         width: '100%',
-        background: 'var(--color-white)',
-        border: '1px solid var(--color-gray-100)',
-        borderRadius: 8,
-        padding: 40,
         textAlign: 'center',
       }}>
-        <div style={{
-          fontFamily: "'IBM Plex Serif', serif",
-          fontSize: 18,
-          color: 'var(--color-navy)',
-          marginBottom: 32,
-        }}>
-          LawStack
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+          <AppIcon />
         </div>
 
         <div style={{
           width: 48,
           height: 48,
           borderRadius: '50%',
-          border: '3px solid var(--color-blue)',
+          border: '3px solid #369EA1',
           borderTopColor: 'transparent',
           margin: '0 auto 24px',
           animation: 'spin 0.8s linear infinite',
@@ -73,17 +66,19 @@ export default function Connect() {
         `}</style>
 
         <h2 style={{
+          fontFamily: "'Inter', sans-serif",
           fontSize: 20,
-          color: 'var(--color-navy)',
+          fontWeight: 700,
+          color: '#0A0A09',
           margin: '0 0 12px',
         }}>
           Payment confirmed.
         </h2>
 
         <p style={{
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: 15,
-          color: 'var(--color-gray-500)',
+          color: '#6B6B69',
           lineHeight: 1.6,
           margin: 0,
         }}>

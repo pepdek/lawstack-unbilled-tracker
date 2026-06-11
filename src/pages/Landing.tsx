@@ -31,16 +31,16 @@ https://app.clio.com/nc/#/activities
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
 
 const ctaStyle: React.CSSProperties = {
-  background: 'linear-gradient(135deg, #1E3A5F 0%, #3730A3 60%, #6D28D9 100%)',
-  borderRadius: '9999px',
-  padding: '16px 36px',
-  color: 'white',
-  fontFamily: "'IBM Plex Sans', sans-serif",
-  fontWeight: 500,
-  fontSize: '16px',
+  background: '#369EA1',
+  borderRadius: '6px',
+  padding: '13px 28px',
+  color: '#0A0A09',
+  fontFamily: "'Inter', sans-serif",
+  fontWeight: 600,
+  fontSize: '15px',
   border: 'none',
   cursor: 'pointer',
-  transition: 'opacity 150ms ease',
+  transition: 'background 120ms ease-out',
   display: 'inline-block',
   textDecoration: 'none',
 };
@@ -61,7 +61,7 @@ export default function Landing() {
       }}>
         {/* Orange banner */}
         <div style={{
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: 14,
           fontWeight: 500,
           color: 'var(--color-yellow)',
@@ -76,18 +76,19 @@ export default function Landing() {
 
         <h1 style={{
           fontSize: 42,
-          fontWeight: 500,
+          fontWeight: 700,
           lineHeight: 1.15,
-          color: 'var(--color-navy)',
+          color: '#0A0A09',
           margin: 0,
+          fontFamily: "'Inter', sans-serif",
         }}>
           You're leaving money in Clio every week. We show you exactly how much.
         </h1>
 
         <p style={{
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: 15,
-          color: 'var(--color-gray-500)',
+          color: '#6B6B69',
           marginTop: 16,
           lineHeight: 1.6,
         }}>
@@ -98,8 +99,8 @@ export default function Landing() {
           <button
             onClick={() => navigate('/subscribe')}
             style={ctaStyle}
-            onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')}
-            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+            onMouseEnter={e => (e.currentTarget.style.background = '#2B7E81')}
+            onMouseLeave={e => (e.currentTarget.style.background = '#369EA1')}
           >
             Start your free trial →
           </button>
@@ -107,9 +108,9 @@ export default function Landing() {
 
         <p style={{
           marginTop: 12,
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: 13,
-          color: 'var(--color-gray-500)',
+          color: '#6B6B69',
         }}>
           14-day free trial. No credit card until day 15. Works with your existing Clio account.
         </p>
@@ -135,22 +136,22 @@ export default function Landing() {
             <div key={num}>
               <span style={{
                 display: 'block',
-                fontFamily: "'IBM Plex Sans', sans-serif",
+                fontFamily: "'Inter', sans-serif",
                 fontSize: 13,
-                color: '#9CA3AF',
+                color: '#A8A8A5',
                 marginBottom: 6,
               }}>{num}</span>
               <div style={{
-                fontFamily: "'IBM Plex Sans', sans-serif",
+                fontFamily: "'Inter', sans-serif",
                 fontSize: 15,
                 fontWeight: 600,
-                color: '#0F1B2D',
+                color: '#0A0A09',
                 marginBottom: 8,
               }}>{title}</div>
               <div style={{
-                fontFamily: "'IBM Plex Sans', sans-serif",
+                fontFamily: "'Inter', sans-serif",
                 fontSize: 14,
-                color: '#6B7280',
+                color: '#6B6B69',
                 lineHeight: 1.6,
               }}>{body}</div>
             </div>
@@ -161,10 +162,10 @@ export default function Landing() {
       {/* Email preview */}
       <div style={{ maxWidth: 560, margin: '0 auto', padding: '0 24px' }}>
         <div style={{
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: 11,
           fontWeight: 500,
-          color: 'var(--color-gray-500)',
+          color: '#6B6B69',
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
           marginBottom: 16,
@@ -173,7 +174,7 @@ export default function Landing() {
         </div>
         <div style={{ background: '#1a2332', borderRadius: 8, padding: '28px 32px' }}>
           <pre style={{
-            fontFamily: "'IBM Plex Mono', monospace",
+            fontFamily: "'Geist Mono', monospace",
             fontSize: 13,
             color: '#94A3B8',
             lineHeight: 1.8,
@@ -194,9 +195,9 @@ export default function Landing() {
         textAlign: 'center',
       }}>
         <p style={{
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: 13,
-          color: 'var(--color-gray-500)',
+          color: '#6B6B69',
           lineHeight: 1.7,
         }}>
           Unbilled Time Tracker reads your Clio time entries and matter names only. We never access client communications, case facts, or confidential matter content. Read-only access, always.

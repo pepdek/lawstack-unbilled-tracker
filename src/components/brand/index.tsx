@@ -1,55 +1,69 @@
-// ─── Eye marks ───────────────────────────────────────────────────────────────
+// ─── Sentinel mark ───────────────────────────────────────────────────────────
 
-const EyeMark = () => (
-  <svg viewBox="0 0 32 20" width="38" height="24"
-    style={{ flexShrink: 0 }} aria-hidden="true">
-    <defs>
-      <linearGradient id="ls-nav-g"
-        x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%"   stopColor="#1E3A5F" />
-        <stop offset="55%"  stopColor="#3730A3" />
-        <stop offset="100%" stopColor="#6D28D9" />
-      </linearGradient>
-    </defs>
-    <ellipse cx="16" cy="10" rx="15" ry="8.5"
-      fill="url(#ls-nav-g)" />
-    <circle cx="14.5" cy="10" r="5.2"
-      fill="#0F1B2D" />
-    <circle cx="14.5" cy="10" r="3.2"
-      fill="url(#ls-nav-g)" />
-    <circle cx="16" cy="8.8" r="1.1"
-      fill="rgba(255,255,255,0.55)" />
-  </svg>
-)
+interface LogoProps {
+  variant?: 'light' | 'dark'
+}
 
-const EyeMarkFooter = () => (
-  <svg viewBox="0 0 32 20" width="38" height="24"
-    style={{ flexShrink: 0 }} aria-hidden="true">
-    <defs>
-      <linearGradient id="ls-ft-g"
-        x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%"   stopColor="#1E3A5F" />
-        <stop offset="55%"  stopColor="#3730A3" />
-        <stop offset="100%" stopColor="#6D28D9" />
-      </linearGradient>
-    </defs>
-    <ellipse cx="16" cy="10" rx="15" ry="8.5"
-      fill="url(#ls-ft-g)" />
-    <circle cx="14.5" cy="10" r="5.2"
-      fill="#0F1B2D" />
-    <circle cx="14.5" cy="10" r="3.2"
-      fill="url(#ls-ft-g)" />
-    <circle cx="16" cy="8.8" r="1.1"
-      fill="rgba(255,255,255,0.55)" />
-  </svg>
-)
+export function Logo({ variant = 'light' }: LogoProps) {
+  const wordColor = variant === 'dark' ? '#FFFFFF' : '#0A0A09'
+  return (
+    <a href="https://lawstack.co"
+      style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+      {/* L letterform */}
+      <svg width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true">
+        <text
+          x="0" y="22"
+          fontFamily="Inter, sans-serif"
+          fontWeight="700"
+          fontSize="24"
+          fill={wordColor}
+        >L</text>
+        {/* teal rule */}
+        <rect x="0" y="23" width="18" height="2" rx="1" fill="#369EA1" />
+      </svg>
+      <span style={{
+        fontFamily: "'Inter', sans-serif",
+        fontWeight: 700,
+        fontSize: '17px',
+        color: wordColor,
+        letterSpacing: '-0.03em',
+        lineHeight: 1,
+      }}>LAWSTACK</span>
+    </a>
+  )
+}
+
+// ─── App icon — Unbilled Time Tracker (clock face) ────────────────────────────
+
+export function AppIcon() {
+  return (
+    <div style={{
+      width: 64,
+      height: 64,
+      borderRadius: 14,
+      background: '#369EA1',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
+    }}>
+      <svg viewBox="0 0 34 34" width="34" height="34" fill="none">
+        <circle cx="17" cy="17" r="10" stroke="#fff" strokeWidth="2" fill="none"/>
+        <path d="M17 10v7l4.5 2.5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <line x1="11" y1="8.5" x2="13" y2="10.5" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+        <line x1="23" y1="8.5" x2="21" y2="10.5" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    </div>
+  )
+}
 
 // ─── NavBar ───────────────────────────────────────────────────────────────────
 
 export function NavBar() {
   return (
     <nav style={{
-      background: '#0F1B2D',
+      background: '#FFFFFF',
+      borderBottom: '0.5px solid #E8E8E6',
       padding: '14px 0',
       width: '100%',
     }}>
@@ -61,28 +75,12 @@ export function NavBar() {
         justifyContent: 'space-between',
         alignItems: 'center',
       }}>
-        <a href="https://lawstack.co"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            textDecoration: 'none',
-          }}>
-          <EyeMark />
-          <span style={{
-            fontFamily: "'Space Grotesk', 'IBM Plex Sans', sans-serif",
-            fontWeight: 700,
-            fontSize: '20px',
-            color: 'white',
-            letterSpacing: '-0.04em',
-            lineHeight: 1,
-          }}>LawStack</span>
-        </a>
+        <Logo variant="light" />
         <a href="mailto:hello@lawstack.co"
           style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
+            fontFamily: "'Inter', sans-serif",
             fontSize: '13px',
-            color: '#9CA3AF',
+            color: '#6B6B69',
             textDecoration: 'none',
           }}>
           hello@lawstack.co
@@ -119,7 +117,7 @@ const legal = [
 export function AppFooter({ currentApp }: AppFooterProps) {
   return (
     <footer style={{
-      background: '#0F1B2D',
+      background: '#0A0A09',
       paddingTop: '64px',
       marginTop: '80px',
     }}>
@@ -139,26 +137,11 @@ export function AppFooter({ currentApp }: AppFooterProps) {
 
           {/* Brand column */}
           <div>
-            <a href="https://lawstack.co"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                textDecoration: 'none',
-              }}>
-              <EyeMarkFooter />
-              <span style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontWeight: 700,
-                fontSize: '20px',
-                color: 'white',
-                letterSpacing: '-0.04em',
-              }}>LawStack</span>
-            </a>
+            <Logo variant="dark" />
             <p style={{
-              fontFamily: "'IBM Plex Sans', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: '13px',
-              color: '#6B7280',
+              color: '#6B6B69',
               marginTop: '12px',
               lineHeight: 1.6,
             }}>
@@ -173,8 +156,8 @@ export function AppFooter({ currentApp }: AppFooterProps) {
                 gap: '8px',
                 marginTop: '16px',
                 textDecoration: 'none',
-                color: '#6B7280',
-                fontFamily: "'IBM Plex Sans', sans-serif",
+                color: '#6B6B69',
+                fontFamily: "'Inter', sans-serif",
                 fontSize: '13px',
               }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -188,12 +171,12 @@ export function AppFooter({ currentApp }: AppFooterProps) {
           {/* Apps column */}
           <div>
             <p style={{
-              fontFamily: "'IBM Plex Sans', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: '11px',
               fontWeight: 500,
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
-              color: '#4B5563',
+              color: '#A8A8A5',
               marginBottom: '16px',
               marginTop: 0,
             }}>Apps</p>
@@ -203,9 +186,9 @@ export function AppFooter({ currentApp }: AppFooterProps) {
                   <a
                     href={`https://lawstack.co/apps/${app.slug}`}
                     style={{
-                      fontFamily: "'IBM Plex Sans', sans-serif",
+                      fontFamily: "'Inter', sans-serif",
                       fontSize: '13px',
-                      color: app.slug === currentApp ? 'white' : '#9CA3AF',
+                      color: app.slug === currentApp ? '#FFFFFF' : '#6B6B69',
                       textDecoration: 'none',
                       fontWeight: app.slug === currentApp ? 500 : 400,
                     }}>
@@ -213,9 +196,9 @@ export function AppFooter({ currentApp }: AppFooterProps) {
                   </a>
                 ) : (
                   <span style={{
-                    fontFamily: "'IBM Plex Sans', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: '13px',
-                    color: '#4B5563',
+                    color: '#A8A8A5',
                     cursor: 'default',
                   }}>
                     {app.name}
@@ -228,12 +211,12 @@ export function AppFooter({ currentApp }: AppFooterProps) {
           {/* Legal column */}
           <div>
             <p style={{
-              fontFamily: "'IBM Plex Sans', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontSize: '11px',
               fontWeight: 500,
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
-              color: '#4B5563',
+              color: '#A8A8A5',
               marginBottom: '16px',
               marginTop: 0,
             }}>Legal</p>
@@ -241,9 +224,9 @@ export function AppFooter({ currentApp }: AppFooterProps) {
               <div key={item.name} style={{ lineHeight: 2 }}>
                 <a href={item.href}
                   style={{
-                    fontFamily: "'IBM Plex Sans', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: '13px',
-                    color: '#9CA3AF',
+                    color: '#6B6B69',
                     textDecoration: 'none',
                   }}>
                   {item.name}
@@ -254,7 +237,7 @@ export function AppFooter({ currentApp }: AppFooterProps) {
         </div>
 
         {/* Divider */}
-        <div style={{ borderTop: '1px solid #1F2937', margin: '0 0 24px' }} />
+        <div style={{ borderTop: '1px solid #1A1A18', margin: '0 0 24px' }} />
 
         {/* Legal line */}
         <div style={{
@@ -263,9 +246,9 @@ export function AppFooter({ currentApp }: AppFooterProps) {
           flexWrap: 'wrap',
           gap: '16px',
           paddingBottom: '32px',
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontSize: '12px',
-          color: '#4B5563',
+          color: '#A8A8A5',
         }}>
           <span>© 2026 LawStack Inc. All rights reserved.</span>
           <span>LawStack is not a law firm and does not provide legal advice.</span>
@@ -299,26 +282,26 @@ export function CrossSellStrip({ toApp }: CrossSellStripProps) {
   const content = crossSellContent[toApp]
   return (
     <div style={{
-      borderTop: '1px solid #E5E7EB',
+      borderTop: '1px solid #E8E8E6',
       padding: '40px 0',
       textAlign: 'center',
       maxWidth: '680px',
       margin: '0 auto',
     }}>
       <p style={{
-        fontFamily: "'IBM Plex Sans', sans-serif",
+        fontFamily: "'Inter', sans-serif",
         fontSize: '14px',
-        color: '#6B7280',
+        color: '#6B6B69',
         margin: '0 0 8px',
       }}>
         {content.text}
       </p>
       <a href={content.href}
         style={{
-          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontFamily: "'Inter', sans-serif",
           fontWeight: 500,
           fontSize: '14px',
-          color: '#3730A3',
+          color: '#369EA1',
           textDecoration: 'none',
         }}>
         {content.cta}
