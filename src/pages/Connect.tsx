@@ -11,7 +11,6 @@ export default function Connect() {
     const sessionId = searchParams.get('session_id') ?? '';
 
     // Guard: both params must come from Stripe's success_url.
-    // Direct navigation or a manually typed URL won't have them.
     if (!pendingId || !sessionId) {
       window.location.replace('/subscribe');
       return;
@@ -23,7 +22,6 @@ export default function Connect() {
     const state = btoa(JSON.stringify({ pending_id: pendingId, session_id: sessionId }));
     const clioUrl = getClioAuthUrl(state);
 
-    // Small delay so the user sees the message before the redirect
     const timer = setTimeout(() => {
       window.location.href = clioUrl;
     }, 800);
@@ -34,15 +32,19 @@ export default function Connect() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#FFFFFF',
+      background: '#115E59',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '24px',
+      padding: 24,
     }}>
       <div style={{
         maxWidth: 420,
         width: '100%',
+        background: '#0F3D39',
+        border: '1px solid rgba(153,246,228,0.15)',
+        borderRadius: 12,
+        padding: 40,
         textAlign: 'center',
       }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
@@ -50,26 +52,23 @@ export default function Connect() {
         </div>
 
         <div style={{
-          width: 48,
-          height: 48,
-          borderRadius: '50%',
-          border: '3px solid #369EA1',
+          width: 40,
+          height: 40,
+          borderRadius: 8,
+          border: '3px solid #14B8A6',
           borderTopColor: 'transparent',
           margin: '0 auto 24px',
           animation: 'spin 0.8s linear infinite',
         }} />
 
-        <style>{`
-          @keyframes spin {
-            to { transform: rotate(360deg); }
-          }
-        `}</style>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 
         <h2 style={{
-          fontFamily: "'Inter', sans-serif",
-          fontSize: 20,
-          fontWeight: 700,
-          color: '#0A0A09',
+          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontSize: 24,
+          fontWeight: 400,
+          color: '#FFFFFF',
+          letterSpacing: '-0.02em',
           margin: '0 0 12px',
         }}>
           Payment confirmed.
@@ -78,8 +77,8 @@ export default function Connect() {
         <p style={{
           fontFamily: "'Inter', sans-serif",
           fontSize: 15,
-          color: '#6B6B69',
-          lineHeight: 1.6,
+          color: '#99F6E4',
+          lineHeight: 1.65,
           margin: 0,
         }}>
           Connecting your Clio account…

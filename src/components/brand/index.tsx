@@ -1,47 +1,38 @@
-// ─── Sentinel mark ───────────────────────────────────────────────────────────
+// ─── Logo (Sentinel mark) ─────────────────────────────────────────────────────
 
-interface LogoProps {
-  variant?: 'light' | 'dark'
-}
-
-export function Logo({ variant = 'light' }: LogoProps) {
-  const wordColor = variant === 'dark' ? '#FFFFFF' : '#0A0A09'
+export function Logo() {
   return (
     <a href="https://lawstack.co"
-      style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-      {/* L letterform */}
-      <svg width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true">
-        <text
-          x="0" y="22"
+      style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+      <svg width="20" height="26" viewBox="0 0 20 26" fill="none" aria-hidden="true">
+        <text x="0" y="22"
           fontFamily="Inter, sans-serif"
-          fontWeight="700"
+          fontWeight="600"
           fontSize="24"
-          fill={wordColor}
-        >L</text>
-        {/* teal rule */}
-        <rect x="0" y="23" width="18" height="2" rx="1" fill="#369EA1" />
+          fill="#FFFFFF">L</text>
+        <rect x="0" y="24" width="18" height="2" rx="1" fill="#14B8A6" />
       </svg>
       <span style={{
         fontFamily: "'Inter', sans-serif",
-        fontWeight: 700,
-        fontSize: '17px',
-        color: wordColor,
-        letterSpacing: '-0.03em',
+        fontWeight: 600,
+        fontSize: 15,
+        color: '#FFFFFF',
+        letterSpacing: '-0.02em',
         lineHeight: 1,
       }}>LAWSTACK</span>
     </a>
   )
 }
 
-// ─── App icon — Unbilled Time Tracker (clock face) ────────────────────────────
+// ─── App icon — Unbilled Time Tracker (clock) ─────────────────────────────────
 
 export function AppIcon() {
   return (
     <div style={{
       width: 64,
       height: 64,
-      borderRadius: 14,
-      background: '#369EA1',
+      borderRadius: 12,
+      background: '#14B8A6',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -62,27 +53,35 @@ export function AppIcon() {
 export function NavBar() {
   return (
     <nav style={{
-      background: '#FFFFFF',
-      borderBottom: '0.5px solid #E8E8E6',
-      padding: '14px 0',
-      width: '100%',
+      position: 'sticky',
+      top: 0,
+      zIndex: 100,
+      height: 56,
+      background: '#0F3D39',
+      borderBottom: '1px solid rgba(153,246,228,0.15)',
+      display: 'flex',
+      alignItems: 'center',
     }}>
       <div style={{
-        maxWidth: '900px',
+        maxWidth: 900,
+        width: '100%',
         margin: '0 auto',
-        padding: '0 40px',
+        padding: '0 24px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
       }}>
-        <Logo variant="light" />
+        <Logo />
         <a href="mailto:hello@lawstack.co"
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: '13px',
-            color: '#6B6B69',
+            fontSize: 14,
+            color: 'rgba(153,246,228,0.50)',
             textDecoration: 'none',
-          }}>
+          }}
+          onMouseEnter={e => (e.currentTarget.style.color = '#99F6E4')}
+          onMouseLeave={e => (e.currentTarget.style.color = 'rgba(153,246,228,0.50)')}
+        >
           hello@lawstack.co
         </a>
       </div>
@@ -117,33 +116,28 @@ const legal = [
 export function AppFooter({ currentApp }: AppFooterProps) {
   return (
     <footer style={{
-      background: '#0A0A09',
-      paddingTop: '64px',
-      marginTop: '80px',
+      background: '#0F3D39',
+      borderTop: '1px solid rgba(153,246,228,0.15)',
+      paddingTop: 64,
+      marginTop: 96,
     }}>
-      <div style={{
-        maxWidth: '900px',
-        margin: '0 auto',
-        padding: '0 40px',
-      }}>
+      <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 24px' }}>
 
-        {/* Three columns */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '35% 30% 30%',
-          gap: '40px',
-          paddingBottom: '40px',
+          gap: 40,
+          paddingBottom: 40,
         }}>
-
-          {/* Brand column */}
+          {/* Brand */}
           <div>
-            <Logo variant="dark" />
+            <Logo />
             <p style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: '13px',
-              color: '#6B6B69',
-              marginTop: '12px',
-              lineHeight: 1.6,
+              fontSize: 13,
+              color: 'rgba(153,246,228,0.50)',
+              marginTop: 12,
+              lineHeight: 1.65,
             }}>
               Practice automation for solo attorneys on Clio.
             </p>
@@ -153,13 +147,16 @@ export function AppFooter({ currentApp }: AppFooterProps) {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
-                marginTop: '16px',
+                gap: 8,
+                marginTop: 16,
                 textDecoration: 'none',
-                color: '#6B6B69',
+                color: 'rgba(153,246,228,0.50)',
                 fontFamily: "'Inter', sans-serif",
-                fontSize: '13px',
-              }}>
+                fontSize: 13,
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#FFFFFF')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(153,246,228,0.50)')}
+            >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
                 <circle cx="4" cy="4" r="2" />
@@ -168,27 +165,25 @@ export function AppFooter({ currentApp }: AppFooterProps) {
             </a>
           </div>
 
-          {/* Apps column */}
+          {/* Apps */}
           <div>
             <p style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: '11px',
+              fontSize: 11,
               fontWeight: 500,
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
-              color: '#A8A8A5',
-              marginBottom: '16px',
-              marginTop: 0,
+              color: 'rgba(153,246,228,0.50)',
+              marginBottom: 16,
             }}>Apps</p>
             {apps.map(app => (
               <div key={app.slug ?? app.name} style={{ lineHeight: 2 }}>
                 {app.slug ? (
-                  <a
-                    href={`https://lawstack.co/apps/${app.slug}`}
+                  <a href={`https://lawstack.co/apps/${app.slug}`}
                     style={{
                       fontFamily: "'Inter', sans-serif",
-                      fontSize: '13px',
-                      color: app.slug === currentApp ? '#FFFFFF' : '#6B6B69',
+                      fontSize: 13,
+                      color: app.slug === currentApp ? '#FFFFFF' : 'rgba(153,246,228,0.50)',
                       textDecoration: 'none',
                       fontWeight: app.slug === currentApp ? 500 : 400,
                     }}>
@@ -197,38 +192,37 @@ export function AppFooter({ currentApp }: AppFooterProps) {
                 ) : (
                   <span style={{
                     fontFamily: "'Inter', sans-serif",
-                    fontSize: '13px',
-                    color: '#A8A8A5',
-                    cursor: 'default',
-                  }}>
-                    {app.name}
-                  </span>
+                    fontSize: 13,
+                    color: 'rgba(153,246,228,0.15)',
+                  }}>{app.name}</span>
                 )}
               </div>
             ))}
           </div>
 
-          {/* Legal column */}
+          {/* Legal */}
           <div>
             <p style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: '11px',
+              fontSize: 11,
               fontWeight: 500,
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
-              color: '#A8A8A5',
-              marginBottom: '16px',
-              marginTop: 0,
+              color: 'rgba(153,246,228,0.50)',
+              marginBottom: 16,
             }}>Legal</p>
             {legal.map(item => (
               <div key={item.name} style={{ lineHeight: 2 }}>
                 <a href={item.href}
                   style={{
                     fontFamily: "'Inter', sans-serif",
-                    fontSize: '13px',
-                    color: '#6B6B69',
+                    fontSize: 13,
+                    color: 'rgba(153,246,228,0.50)',
                     textDecoration: 'none',
-                  }}>
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#FFFFFF')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(153,246,228,0.50)')}
+                >
                   {item.name}
                 </a>
               </div>
@@ -236,24 +230,21 @@ export function AppFooter({ currentApp }: AppFooterProps) {
           </div>
         </div>
 
-        {/* Divider */}
-        <div style={{ borderTop: '1px solid #1A1A18', margin: '0 0 24px' }} />
+        <div style={{ borderTop: '1px solid rgba(153,246,228,0.15)', margin: '0 0 24px' }} />
 
-        {/* Legal line */}
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          gap: '16px',
-          paddingBottom: '32px',
+          gap: 16,
+          paddingBottom: 32,
           fontFamily: "'Inter', sans-serif",
-          fontSize: '12px',
-          color: '#A8A8A5',
+          fontSize: 12,
+          color: 'rgba(153,246,228,0.50)',
         }}>
           <span>© 2026 LawStack Inc. All rights reserved.</span>
           <span>LawStack is not a law firm and does not provide legal advice.</span>
         </div>
-
       </div>
     </footer>
   )
@@ -273,7 +264,7 @@ const crossSellContent = {
   },
   'unbilled-time-tracker': {
     text: "Also from LawStack: Unbilled Time Tracker — see exactly what you haven't invoiced this week.",
-    cta: 'Start free trial →',
+    cta: 'Start free →',
     href: 'https://unbilled.lawstack.co',
   },
 }
@@ -282,16 +273,16 @@ export function CrossSellStrip({ toApp }: CrossSellStripProps) {
   const content = crossSellContent[toApp]
   return (
     <div style={{
-      borderTop: '1px solid #E8E8E6',
-      padding: '40px 0',
+      borderTop: '1px solid rgba(153,246,228,0.15)',
+      padding: '40px 24px',
       textAlign: 'center',
-      maxWidth: '680px',
+      maxWidth: 680,
       margin: '0 auto',
     }}>
       <p style={{
         fontFamily: "'Inter', sans-serif",
-        fontSize: '14px',
-        color: '#6B6B69',
+        fontSize: 14,
+        color: 'rgba(153,246,228,0.50)',
         margin: '0 0 8px',
       }}>
         {content.text}
@@ -300,10 +291,13 @@ export function CrossSellStrip({ toApp }: CrossSellStripProps) {
         style={{
           fontFamily: "'Inter', sans-serif",
           fontWeight: 500,
-          fontSize: '14px',
-          color: '#369EA1',
+          fontSize: 14,
+          color: '#14B8A6',
           textDecoration: 'none',
-        }}>
+        }}
+        onMouseEnter={e => (e.currentTarget.style.color = '#0D9488')}
+        onMouseLeave={e => (e.currentTarget.style.color = '#14B8A6')}
+      >
         {content.cta}
       </a>
     </div>

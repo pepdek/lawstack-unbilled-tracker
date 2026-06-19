@@ -4,36 +4,43 @@ export default function Confirmed() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#FFFFFF',
+      background: '#115E59',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '24px',
+      padding: 24,
     }}>
       <div style={{
         maxWidth: 420,
         width: '100%',
+        background: '#0F3D39',
+        border: '1px solid rgba(153,246,228,0.15)',
+        borderRadius: 12,
+        padding: 40,
         textAlign: 'center',
       }}>
         <div style={{
-          width: 72,
-          height: 72,
-          borderRadius: '50%',
-          background: 'var(--color-green-bg)',
+          width: 64,
+          height: 64,
+          borderRadius: 8,
+          background: 'rgba(20,184,166,0.15)',
+          border: '1px solid rgba(153,246,228,0.15)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          margin: '0 auto',
+          margin: '0 auto 24px',
         }}>
-          <Check size={48} color="var(--color-green)" strokeWidth={2} />
+          <Check size={32} color="#14B8A6" strokeWidth={2} />
         </div>
 
         <h2 style={{
-          fontFamily: "'Inter', sans-serif",
-          fontSize: 24,
-          fontWeight: 700,
-          color: '#0A0A09',
-          margin: '16px 0 0',
+          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontSize: 28,
+          fontWeight: 400,
+          color: '#FFFFFF',
+          letterSpacing: '-0.02em',
+          lineHeight: 1.1,
+          margin: '0 0 16px',
         }}>
           You're connected.
         </h2>
@@ -41,9 +48,9 @@ export default function Confirmed() {
         <p style={{
           fontFamily: "'Inter', sans-serif",
           fontSize: 15,
-          color: '#6B6B69',
-          lineHeight: 1.6,
-          marginTop: 12,
+          color: '#99F6E4',
+          lineHeight: 1.65,
+          margin: 0,
         }}>
           Unbilled Time Tracker is now watching your Clio account.
           Every Sunday at 6pm, you'll receive one email listing every
@@ -54,12 +61,16 @@ export default function Confirmed() {
         <p style={{
           fontFamily: "'Inter', sans-serif",
           fontSize: 13,
-          color: '#6B6B69',
+          color: 'rgba(153,246,228,0.50)',
           marginTop: 20,
-          lineHeight: 1.6,
+          lineHeight: 1.65,
         }}>
           Questions? Reply to any LawStack email or contact{' '}
-          <a href="mailto:pep@lawstack.co" style={{ color: '#6B6B69' }}>
+          <a href="mailto:pep@lawstack.co"
+            style={{ color: '#14B8A6' }}
+            onMouseEnter={e => (e.currentTarget.style.color = '#0D9488')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#14B8A6')}
+          >
             pep@lawstack.co
           </a>
         </p>

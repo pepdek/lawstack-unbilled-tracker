@@ -30,97 +30,96 @@ Review and invoice →
 https://app.clio.com/nc/#/activities
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
 
-const ctaStyle: React.CSSProperties = {
-  background: '#369EA1',
-  borderRadius: '6px',
-  padding: '13px 28px',
-  color: '#0A0A09',
-  fontFamily: "'Inter', sans-serif",
-  fontWeight: 600,
-  fontSize: '15px',
-  border: 'none',
-  cursor: 'pointer',
-  transition: 'background 120ms ease-out',
-  display: 'inline-block',
-  textDecoration: 'none',
-};
-
 export default function Landing() {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div style={{ background: '#115E59', minHeight: '100vh' }}>
       <NavBar />
 
       {/* Hero */}
-      <div style={{
+      <section style={{
         maxWidth: 640,
         margin: '0 auto',
-        padding: '80px 24px',
+        padding: '96px 24px 80px',
         textAlign: 'center',
       }}>
-        {/* Orange banner */}
-        <div style={{
+        {/* Eyebrow */}
+        <p style={{
           fontFamily: "'Inter', sans-serif",
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: 500,
-          color: 'var(--color-yellow)',
-          background: 'var(--color-yellow-bg)',
-          padding: '10px 16px',
-          borderRadius: 6,
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          color: '#14B8A6',
           marginBottom: 24,
-          display: 'inline-block',
         }}>
           The average solo attorney leaves $2,100 in unbilled work on the table every month.
-        </div>
+        </p>
 
         <h1 style={{
-          fontSize: 42,
-          fontWeight: 700,
-          lineHeight: 1.15,
-          color: '#0A0A09',
-          margin: 0,
-          fontFamily: "'Inter', sans-serif",
+          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontSize: 'clamp(2.25rem, 6vw, 3.5rem)',
+          fontWeight: 400,
+          lineHeight: 1.1,
+          letterSpacing: '-0.02em',
+          color: '#FFFFFF',
+          margin: '0 0 24px',
         }}>
           You're leaving money in Clio every week. We show you exactly how much.
         </h1>
 
         <p style={{
           fontFamily: "'Inter', sans-serif",
-          fontSize: 15,
-          color: '#6B6B69',
-          marginTop: 16,
-          lineHeight: 1.6,
+          fontSize: 18,
+          color: '#99F6E4',
+          lineHeight: 1.65,
+          margin: '0 0 40px',
         }}>
           Unbilled Time Tracker connects to your Clio account and sends you one email every Sunday: every uninvoiced time entry from the past 30 days and the dollar value you haven't captured. $49/month. 14-day free trial.
         </p>
 
-        <div style={{ marginTop: 32 }}>
-          <button
-            onClick={() => navigate('/subscribe')}
-            style={ctaStyle}
-            onMouseEnter={e => (e.currentTarget.style.background = '#2B7E81')}
-            onMouseLeave={e => (e.currentTarget.style.background = '#369EA1')}
-          >
-            Start your free trial →
-          </button>
-        </div>
+        <button
+          onClick={() => navigate('/subscribe')}
+          style={{
+            background: '#A3E635',
+            color: '#1A1A1A',
+            fontFamily: "'Inter', sans-serif",
+            fontWeight: 600,
+            fontSize: 16,
+            padding: '14px 32px',
+            borderRadius: 8,
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'background 150ms ease, transform 150ms ease',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = '#8FCF1E';
+            e.currentTarget.style.transform = 'scale(1.01)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = '#A3E635';
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
+        >
+          Get your first email free
+        </button>
 
         <p style={{
-          marginTop: 12,
           fontFamily: "'Inter', sans-serif",
           fontSize: 13,
-          color: '#6B6B69',
+          color: 'rgba(153,246,228,0.50)',
+          marginTop: 12,
         }}>
           14-day free trial. No credit card until day 15. Works with your existing Clio account.
         </p>
-      </div>
+      </section>
 
       {/* How it works */}
-      <div style={{
+      <section style={{
         maxWidth: 800,
         margin: '0 auto',
-        padding: '0 24px 80px',
+        padding: '0 24px 96px',
       }}>
         <div style={{
           display: 'grid',
@@ -129,54 +128,54 @@ export default function Landing() {
           textAlign: 'center',
         }}>
           {[
-            { num: '1', title: 'Connect Clio',     body: 'One OAuth button. 90 seconds.' },
-            { num: '2', title: 'We find the gaps',  body: "We scan every time entry you haven't invoiced in the last 30 days." },
-            { num: '3', title: 'Sunday evening',    body: 'Your unbilled summary arrives at 6pm. You invoice Monday morning.' },
+            { num: '01', title: 'Connect Clio',    body: 'One OAuth button. 90 seconds.' },
+            { num: '02', title: 'We find the gaps', body: "We scan every time entry you haven't invoiced in the last 30 days." },
+            { num: '03', title: 'Sunday evening',   body: 'Your unbilled summary arrives at 6pm. You invoice Monday morning.' },
           ].map(({ num, title, body }) => (
             <div key={num}>
               <span style={{
                 display: 'block',
-                fontFamily: "'Inter', sans-serif",
+                fontFamily: "'JetBrains Mono', monospace",
                 fontSize: 13,
-                color: '#A8A8A5',
-                marginBottom: 6,
+                color: '#14B8A6',
+                marginBottom: 8,
               }}>{num}</span>
               <div style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: 15,
                 fontWeight: 600,
-                color: '#0A0A09',
+                color: '#FFFFFF',
                 marginBottom: 8,
               }}>{title}</div>
               <div style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: 14,
-                color: '#6B6B69',
-                lineHeight: 1.6,
+                color: '#99F6E4',
+                lineHeight: 1.65,
               }}>{body}</div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
       {/* Email preview */}
-      <div style={{ maxWidth: 560, margin: '0 auto', padding: '0 24px' }}>
-        <div style={{
+      <section style={{ maxWidth: 560, margin: '0 auto', padding: '0 24px' }}>
+        <p style={{
           fontFamily: "'Inter', sans-serif",
           fontSize: 11,
           fontWeight: 500,
-          color: '#6B6B69',
+          color: '#14B8A6',
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
           marginBottom: 16,
         }}>
-          WHAT YOUR EMAIL LOOKS LIKE
-        </div>
-        <div style={{ background: '#1a2332', borderRadius: 8, padding: '28px 32px' }}>
+          What your email looks like
+        </p>
+        <div style={{ background: '#0F3D39', border: '1px solid rgba(153,246,228,0.15)', borderRadius: 8, padding: '28px 32px' }}>
           <pre style={{
-            fontFamily: "'Geist Mono', monospace",
+            fontFamily: "'JetBrains Mono', monospace",
             fontSize: 13,
-            color: '#94A3B8',
+            color: '#99F6E4',
             lineHeight: 1.8,
             whiteSpace: 'pre',
             margin: 0,
@@ -185,24 +184,24 @@ export default function Landing() {
             {EMAIL_PREVIEW}
           </pre>
         </div>
-      </div>
+      </section>
 
       {/* Privacy note */}
-      <div style={{
+      <section style={{
         maxWidth: 560,
-        margin: '48px auto 0',
-        padding: '0 24px',
+        margin: '0 auto',
+        padding: '48px 24px 0',
         textAlign: 'center',
       }}>
         <p style={{
           fontFamily: "'Inter', sans-serif",
           fontSize: 13,
-          color: '#6B6B69',
+          color: 'rgba(153,246,228,0.50)',
           lineHeight: 1.7,
         }}>
           Unbilled Time Tracker reads your Clio time entries and matter names only. We never access client communications, case facts, or confidential matter content. Read-only access, always.
         </p>
-      </div>
+      </section>
 
       <CrossSellStrip toApp="deadline-reminder" />
       <AppFooter currentApp="unbilled-time-tracker" />
